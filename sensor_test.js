@@ -119,7 +119,7 @@ function grow_lamp(){
 }
 
 
-function temp_threshold(linkPWM){ // 25C is roughly 250
+function temp_threshold(linkPWM){
     if(temp>=250 && temp<300){
         linkPWM.pwmDutyRatio(3, 0.33);
         temp_pwm = 0.33;
@@ -145,17 +145,29 @@ function temp_threshold(linkPWM){ // 25C is roughly 250
         temp_pwm = 0.99;
     }
     else if(temp<250){
-        linkPWM.pwmDutyRatio(3, 0.1); // good temp, need air circulations
+        linkPWM.pwmDutyRatio(3, 0.1); // very good temp, only need air circulations
         temp_pwm = 0.1;
     }
 }
 
-function humid_threshold(linkPWM){ //725 = 70% humidity
-    if(humid >= 725){
-        linkPWM.pwmDutyRatio(2, 0.1);
-        humid_pwm = 0.1;
+function humid_threshold(linkPWM){
+    if(humid<990 && humid >= 900){
+        linkPWM.pwmDutyRatio(2, 0.3);
+        humid_pwm = 0.3;
     }
-    else if(humid<725 && humid >= 700){
+    else if(humid<900 && humid >= 850){
+        linkPWM.pwmDutyRatio(2, 0.35);
+        humid_pwm = 0.35;
+    }
+    else if(humid<850 && humid >= 800){
+        linkPWM.pwmDutyRatio(2, 0.4);
+        humid_pwm = 0.4;
+    }
+    else if(humid<800 && humid >= 750){
+        linkPWM.pwmDutyRatio(2, 0.5);
+        humid_pwm = 0.5;
+    }
+    else if(humid<750 && humid >= 700){
         linkPWM.pwmDutyRatio(2, 0.6);
         humid_pwm = 0.6;
     }
@@ -177,8 +189,36 @@ function humid_threshold(linkPWM){ //725 = 70% humidity
     }
 }
 
-function lamp_threshold(linkPWM){ // < 10k lux, light on FULL
-    if(light<1023){
+function lamp_threshold(linkPWM){
+    if(light<985 && light >= 900){
+        linkPWM.pwmDutyRatio(1, 0.3);
+        light_pwm = 0.3;
+    }
+    else if(light<900 && light>=800){
+        linkPWM.pwmDutyRatio(1, 0.45);
+        light_pwm = 0.45;
+    }
+    else if(light<800 && light>=700){
+        linkPWM.pwmDutyRatio(1, 0.55);
+        light_pwm = 0.55;
+    }
+    else if(light<700 && light>=600){
+        linkPWM.pwmDutyRatio(1, 0.65);
+        light_pwm = 0.65;
+    }
+    else if(light<600 && light>=500){
+        linkPWM.pwmDutyRatio(1, 0.75);
+        light_pwm = 0.75;
+    }
+    else if(light<500 && light>=400){
+        linkPWM.pwmDutyRatio(1, 0.85);
+        light_pwm = 0.85;
+    }
+    else if(light<400 && light>=300){
+        linkPWM.pwmDutyRatio(1, 0.90);
+        light_pwm = 0.90;
+    }
+    else if(light<300){
         linkPWM.pwmDutyRatio(1, 0.99);
         light_pwm = 0.99;
     }
